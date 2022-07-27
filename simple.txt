@@ -1,0 +1,1 @@
+Hoy he aprendido a usar archivos en Python, más o menos, esto determinará si ha sido fructifero, tengo que imprimir esto tres veces. 
