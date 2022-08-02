@@ -516,4 +516,27 @@ except FileNotFoundError:
     msg = "Sorry, the file " + fileName + " doesn't exist." 
     print(msg)
 
+else:
+    #Contar las palabras dentro de un archivo
+    words = contents.split()
+    numWords = len(words)
+    print("The file has: " + numWords + " words.")
 
+#Funcion para contar las palabras; contiene excepciones
+def contarPalabras(filename): 
+    try: 
+        with open(filename) as fo:
+            contents = fo.read()
+    except FileNotFoundError: 
+        msg = "Sorry, the file " + filename + " does not exist. "
+        print(msg)
+        #pass //Siempre se puede colocar un pass para 'fallar de forma silenciosa'
+    else: 
+        words = contents.split()
+        numWords = len(words)
+        print("File lenght : " + numWords)
+
+filenames = ['Alice.txt', 'modyDick.txt', 'littleWomen.txt']
+for filename in filenames: 
+    contarPalabras(filename)
+#contarPalabras(filename) 
