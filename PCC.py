@@ -540,3 +540,90 @@ filenames = ['Alice.txt', 'modyDick.txt', 'littleWomen.txt']
 for filename in filenames: 
     contarPalabras(filename)
 #contarPalabras(filename) 
+
+
+#Storing data - JSON file
+import json 
+numbers = [2,3,5,7,11,13]
+
+filename = 'numbers.json'
+with open(filename, 'w') as fo:
+    json.dump(numbers,fo) #To store the list of numbers in the file numbers.json
+    json.load(fo) #Trae la informacion que tenemos en numbers.json
+
+with open(filename) as fo:
+    numbers = json.load(fo)
+print(numbers)
+
+#Json con datos de usuario
+username = input('What is your name?')
+
+filename = 'username.json'
+with open(filename, 'w') as fo:
+    json.dump(username, fo) #Guardamos la información del usuario dentro de username.json
+    print('Well remmeber you when you came back, ' + username + ' !')
+
+with open(filename) as fo:
+    username = json.load(fo)
+    print('Welcome + user')
+
+#Excepciones dentro de un Json
+def getStoresUsername():
+    filename = 'username.json'
+    try: 
+        #Intentamos abrir el archivo
+        with open(filename) as fo:
+            username = json.load(fo)
+        #Si no lo encontramos, creamos uno y lo llenamos
+    except FileNotFoundError:
+        username = input('whats your name?')
+        with open(filename, 'w') as fo:
+            json.dump(username, fo)
+            print("Well remember you when you come back + username + !")
+    else:#Si existe, leeemos y saludamos al usuario
+        print("Welcome back + username + !")
+
+
+
+
+
+#11. Testing code
+import unittest      
+
+def getFormattedName(first, middle, last): #A regular function just to test
+#Anterior: def getFormattedName(first, last): #El programa funciona con este código; 
+    #Anterior: fullName = first + ' ' + last
+    fullName = first + ' ' + middle + ' ' + last 
+    return fullName.title()
+
+print("Enter 'q' at any time to quit.")
+while True:
+    first = input("\nPlease give me a first name: ")
+    if first == 'q':
+        break 
+    last = input("Please give me a last name: ")
+    if last == 'q':
+        break 
+
+    formattedName = getFormattedName(first, last)
+    print("\tNeatly formatted name: " + formattedName + ".")
+
+class NamesTestCase(unittest.TestCase):
+    def testFirstLastName(self):
+        formattedName = getFormattedName('Janis', 'joplin')
+        self.assertEqual(formattedName, 'Janis Joplin')
+        #La línea de arriba quiere decir que 'Corra el programa y el resultado debe ser este,
+        #si lo es, bien; si no, dejamelo saber
+    #Añadiendo más tests: Un test para chechar cómo sale con un nombre medio
+    def tstFirstLastMiddleName(self):
+        formattedName = getFormattedName(
+            'Wolfgang', 'mozart', 'amadeus'
+        )
+        self.assertEqual(formattedName, 'Wolgang Amadeus Mozart')
+
+
+unittest.main()
+#Hemos cambiado con 'Antiguo' y ahora debería dar error el test
+
+
+#Testing a Class: 222
