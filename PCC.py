@@ -626,4 +626,123 @@ unittest.main()
 #Hemos cambiado con 'Antiguo' y ahora debería dar error el test
 
 
+
+
+
+
 #Testing a Class: 222
+#081222
+##Repaso Cap 9; Classes
+
+"""dog.py"""
+class Dog(): #Definición de la clase 'Dog'
+    def __init__(self, name, age): #Método: Cuando una función está dentro de una clase
+        #Atributos
+        self.name = name 
+        self.age = age 
+    def sit(self): 
+        print(self.name.title() + " is now sitting.") 
+    def rollOver(self): 
+        print(self.name.title() + " rolled over.")
+
+#A. Instancias de una clase
+myDog = Dog('Willie', 6) #Creamos un perro llamado Willie con 6 años
+print('My dogs name is ' + myDog.name.title() + ".")
+print('My dogs is ' + str(myDog.age) + "years old.")
+myDog.sit()
+myDog.rollOver()
+
+yourDog = Dog('Lucas', 8)
+print('My dogs name is ' + yourDog.name.title() + ".")
+print('My dogs is ' + str(yourDog.age) + "years old.")
+yourDog.sit()
+yourDog.rollOver()
+######
+"""car.py"""
+class Car():
+    def __init__(self, make, model, year):
+        self.make = make 
+        self.model = model 
+        self.year = year 
+        self.odometerReading = 0
+
+    def getDescriptiveName(self): 
+        longName = str(self.year) + ' ' + self.make + ' ' + self.model 
+        return longName.title() 
+
+    def readOdometer(self):
+        print("This cas has " + str(self.odometerReading) + " miles on it.")
+
+    def updateOdometer(self,mileage): #Creamos un metodo para modificar el valor del odometro
+        self.odometerReading = mileage 
+#Instancia
+myNewCar = Car('audi', 'a4', 2016)
+print(myNewCar.getDescriptiveName()) #Print 2016 Audi A4 
+#Formas de modificar un atributo
+myNewCar.odometerReading = 23  #Afectando a la variable
+myNewCar.updateOdometer(23) #Usando un método 
+
+
+#B. Herencia
+class ElectricCar(Car): #Creates a new class from 'Car' class
+    def __init__(self, make, model, year): 
+        super().__init__(make, model, year) #Le da a la clase hija todos los 
+                                            #atributos de la clase madre
+        self.batterySize = 70 #Un atributo propio de la clase hija
+    
+    def describeBattery(self): #Metodo propio
+        print("This car has a " + str(self.batterySize) + "-kWh battery.")
+
+    def fillGasTank():
+        print("This car doesn't need a gas tank!")
+#Instancia
+myTesla = ElectricCar('tesla', 'model s', 2016)
+print(myTesla.getDescriptiveName())
+myTesla.describeBattery() 
+
+
+#C. Importar clases
+#from car import Car // Quiere decir que de car.py importe la clase Car
+#Luego podemos instanciar de esa clase: 
+myNewCar = Car('Audi', 'a4, 2016') #Y seguirá funcionando
+#Importar más clases: from car import Car, ElectricCar // Importamos Car y ElectricCar
+#Importar todo un módulo: import Car //Importamos todo lo que hay en Car.py
+
+
+
+
+#10. Files and Exceptions. 189/222
+#Lee e imprime lo que hay en un archivo .txt
+with open('piDigits.txt') as fileObject:
+    contents = fileObject.read() #leemos el archivo
+    print(contents.rstrip()) #Imprimimos lo que guardamos en contents
+
+#Leer linea por linea 
+fileName = 'piDigits.txt'
+with open(fileName) as fo:
+    for line in fo:
+        print(line.rstrip()) 
+
+#Una lista de lineas de un archivo
+with open(fileName) as fo: 
+    lines = fo.readlines() #Toma cada linea del texto y la guarda en una lista
+piString = ''
+for line in lines: 
+    piString += line.strip() 
+print(piString)
+
+#Encontrar una cadena dentro de un archivo
+if '41263512' in piString:
+    print("41263512 existe en Pi")
+
+#Ejercicio
+filename = 'C:/Users/David Ordoñez/Documents/D.Software Pillar/PythonCC'
+with open(filename) as fo: 
+    lines = fo.readlines()
+myPIString = ''
+for line in lines:
+    myPIString += line
+mybday = '200803'
+if mybday in myPIString:
+    print(f'{mybday} is in the pi Digits')
+
