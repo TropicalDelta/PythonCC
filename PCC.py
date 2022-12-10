@@ -877,6 +877,7 @@ mySurvey.showResults()
 import unittest 
 #Verifica que la respuesta si se guardo en la lista de respuestas
 class TestAnonymousSurvey(unittest.TestCase): 
+    
     def test_storeSingleResponse(self): 
         question = "What language did you first learn to speak?"
         mySurvey = AnonymousSurvey(question) #Hacemos la instancia de la clase
@@ -896,3 +897,26 @@ class TestAnonymousSurvey(unittest.TestCase):
         for response in responses: 
             self.assertIn(response, mySurvey.responses)
             #Verifica que si se guardaron las tres respuestas
+unittest.main() 
+
+#Setup; hacemos el codigo más corto y util para todo el codigo
+import unittest
+class TestAnonymousSurvey(unittest.TestCase): 
+    def setUp(self): 
+        question = "What language did you first learn to speak?"
+        self.mySurvey = AnonymousSurvey(question) 
+        self.responses = ['English', 'Spanish' 'Mandarin'] 
+        #Crea una instancia de la encuesta
+        #Crea una lista de respuestas a utilizar
+        #Usa '.self' porque va a ser utilizado en cualquier parte de la clase
+
+    def test_storeSingleResponse(self): 
+        self.mySurvey.storeResponse(self.responses[0]) #Solo mira la primera palabra
+        self.assertIn(self.responses[0], self.mySurvey.responses)
+
+    def test_storeThreeResponses(self): 
+        for response in self.responses:  #Checa por todas las palabras
+            self.mySurvey.storeResponse(response) 
+        for response in self.responses: 
+            self.assertIn(response, self.mySurvey.reponses)
+unittest.main() 
