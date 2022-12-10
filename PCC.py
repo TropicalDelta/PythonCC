@@ -746,3 +746,153 @@ mybday = '200803'
 if mybday in myPIString:
     print(f'{mybday} is in the pi Digits')
 
+#Escribir en un archivo
+with open(filename, 'w') as fo: #Con w indicamos que vamos a escribir 'write'
+    fo.write("I love Programming")
+    fo.write("\nI love creating new games")
+    #'w' elimina todo lo que haya en el archivo para escribir en blanco
+
+with open(filename, 'a') as fo: #Para añadir contenido a el archivo 'apennd'
+    fo.write("I also love finding meaning in large datasets. \n")
+    fo.write("I love creating apps that can run in a browser. \n") 
+
+
+
+
+
+#Exceptions
+#Error de division
+try:
+    answer = (5/0) #Solo lo intenta, no devuelve el resultado
+except ZeroDivisionError: 
+    print("You cant divide by zero!") 
+    #Ahora cuando dividamos por cero, no dara el error tipico y solo 
+    #anunciara el texto que hemos introducido
+else: print(answer) #Devuelve el resultado despues de haber intentado
+
+#Error desubicacion del archivo
+filename = 'alice.txt'
+try:
+    with open(filename) as fo: 
+        content = fo.read()
+except FileNotFoundError: 
+    msg = "Sorry, the file " + filename + " does not exist."
+    print(msg)
+else: 
+    words = content.split() 
+    numWords = len(words) 
+    print(f"The file {filename} has about {numWords} words.")
+
+
+
+
+
+#JSON module
+import json
+numbers = [2,3,5,7,11,13]
+filename = 'numbers.json'
+#Escribir en un archivo json
+with open(filename, 'w') as fo: 
+    json.dump(numbers, fo) #Store the list numbers in the json file
+
+#Leer de un archivo json
+with open(filename) as fo: 
+    numbers = json.load(fo) #Cargamos del archivo los datos que contiene
+print(numbers)
+
+
+
+
+
+#11. Testing your Code
+#Testing a Function
+import unittest 
+
+#Un programa promedio que une los nombres de una persona en un string
+def get_formatted_name(first, last, middle=''):
+    if middle: 
+        full_name = first + ' ' + middle + ' ' + last 
+    else: 
+        full_name = first + ' ' + last 
+    return full_name.title()
+
+#Recibe los nombres
+print("Enter 'q' at any time to quit.") 
+while True:
+    first = input("\nPlease give me a first name: ") 
+    if first == 'q': break
+    last = input("Please give me a last name: ") 
+    if last == 'q': break
+    formatted_name = get_formatted_name(first, last) 
+    print("\tNeatly formatted name: " + formatted_name + '.')
+
+#Clase que hace los tests
+class NamesTestCase(unittest.TestCase):
+    def test_FirstLastName(self): 
+        formatted_name = get_formatted_name('janis', 'joplin')
+        self.assertEqual(formatted_name, 'Janis Joplin') 
+        #Assert verifica que lo que ingresas va a salir como se quiere
+
+    def test_FirstLastMiddleName(self): 
+        formatted_name = get_formatted_name('janis', 'mozart', 'amadeus')
+        self.assertEqual(formatted_name, 'Janis Mozart Amadeus') 
+        #Arriba dice; formatted_name debe ser igual a 'Janis Mozart Amadeus'
+unittest.main() #Dice a Python que corra el test
+
+
+#Testing a una clase
+"""survey.py"""
+class AnonymousSurvey(): 
+    def __init__(self, question): 
+        self.question = question
+        self.responses = [] 
+    
+    def showQuestion(self): 
+        print(question) 
+    
+    def storeResponse(self,newResponse):
+        self.responses.append(newResponse)
+
+    def showResults(self): 
+        print("Survey Results: ")
+        for response in self.responses: 
+            print("- " + response)
+
+#Main
+question = "What language did you first learn to speak?"
+mySurvey = AnonymousSurvey(question)
+mySurvey.showQuestion()
+
+print("Enter 'q' at any time to quit\n")
+while True: 
+    response = input("Language: ")
+    if response == 'q': 
+        break 
+    mySurvey.storeResponse(response)
+#Show the results
+print("\nThank you to everyone who participated in the survey!")
+mySurvey.showResults()
+
+#Test de la encuesta
+import unittest 
+#Verifica que la respuesta si se guardo en la lista de respuestas
+class TestAnonymousSurvey(unittest.TestCase): 
+    def test_storeSingleResponse(self): 
+        question = "What language did you first learn to speak?"
+        mySurvey = AnonymousSurvey(question) #Hacemos la instancia de la clase
+        mySurvey.storeResponse('English') 
+
+        self.assertIn('English', mySurvey.responses) 
+        #Verifica que 'English' si esta en las respuestas
+    
+    #Comprobar que si se guardaron 3 respuestas
+    def test_storeThreeResponses(self):
+        question = "What language did you first learn to speak?"
+        mySurvey = AnonymousSurvey(question) #Instanciacion de la clase
+        responses = ['English', 'Spanish' 'Mandarin']
+        for response in responses: 
+            mySurvey.storeResponse(response) 
+        
+        for response in responses: 
+            self.assertIn(response, mySurvey.responses)
+            #Verifica que si se guardaron las tres respuestas
