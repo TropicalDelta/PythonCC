@@ -19,12 +19,13 @@ def runGame():
     pygame.display.set_caption("Alien Invasion") 
 
     #Hacer la nave: 
-    ship = Ship(screen)
+    ship = Ship(aiSettings, screen)
 
     #Iniciar el loop para el juego
     while True: 
         #Eventos del juego descritas en gameActions: 
-        gf.checkEvents()
+        gf.checkEvents(ship)
+        ship.update()
         #Características de la pantalla: 
         gf.updateScreen(aiSettings, screen, ship)
 
